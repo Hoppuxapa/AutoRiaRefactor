@@ -18,7 +18,6 @@ import java.util.Map;
 @RequestMapping("/registration")
 public class RegistrationController {
 
-
     @Autowired
     private UserService userService;
 
@@ -32,21 +31,18 @@ public class RegistrationController {
         return "registration";
     }
 
-
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user") UserRegistrationDTO userDto,
-                                      BindingResult result, Map<String, Object> model) {
+                                      BindingResult result){
         User existing = userService.findByUsername(userDto.getUsername());
-        if (existing != null) {
+        if (existing != null){
             result.rejectValue("username", null, "There is already an account registered with that username");
-            model.put("message", "User exists!");
-            return "registration";
         }
-        if (result.hasErrors()) {
+        if (result.hasErrors()){
             return "registration";
         }
         userService.save(userDto);
-        return "redirect:/login";
+        return "redirect:/registration?success";
     }
 
 }

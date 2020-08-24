@@ -1,10 +1,7 @@
 package com.kravchuk.service;
-
-import com.kravchuk.domain.DatabaseUserRole;
 import com.kravchuk.domain.User;
 import com.kravchuk.domain.UserRole;
 import com.kravchuk.repository.UserRepository;
-import com.kravchuk.repository.UserRoleRepository;
 import com.kravchuk.service.dto.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,66 +22,58 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserDetailsService {
 
-
-    @Autowired
-    private UserRoleRepository userRoleRepository;
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
- /*   public void changeUserRoleToAdministrator(Long id) {
+    public void changeUserRoleToAdministrator(Long id){
         userRepository.changeUserRoleToAdministrator(id);
     }
 
-    public void changeUserRoleToUser(Long id) {
+    public void changeUserRoleToUser(Long id){
         userRepository.changeUserRoleToUser(id);
     }
-    */
 
-    public User findByUsername(String username) {
+    public User findByUsername(String username){
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("No user with username " + username));
     }
 
-    public List<User> findAllUsers() {
+    public List<User> findAllUsers(){
         return userRepository.findAll();
     }
 
-   /* public void deleteUser(Long id) {
-        userRepository.delete(id);
-    }*/
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
+    }
 
-    public void saveUser(User user) {
+    public void saveUser(User user){
         userRepository.saveAndFlush(user);
     }
 
-    public User save(UserRegistrationDTO registration) {
+    public User save(UserRegistrationDTO registration){
         User user = new User();
         user.setFirstName(registration.getFirstName());
         user.setLastName(registration.getLastName());
         user.setPassword(passwordEncoder.encode(registration.getPassword()));
-        user = userRepository.save(user);
-        UserRole userRole = new UserRole();
-        userRole.setUser(user);
-        userRole.setUserRole(DatabaseUserRole.USER);
-        userRoleRepository.save(userRole);
-        return user;
+        user.setUserRole(UserRole.USER);
+        return userRepository.save(user);
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
-        if (user == null) {
+        if (user == null){
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new org.springframework.security.core.userdetails.User(user.getLogin(),
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(),
                 mapRolesToAuthorities(Collections.singletonList(user.getUserRole())));
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<UserRole> roles) {
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<UserRole> roles){
         return roles.stream()
-                .map(userRole -> userRole.getUserRole())
                 .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());
     }
