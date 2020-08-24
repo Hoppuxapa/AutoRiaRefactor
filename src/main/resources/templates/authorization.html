@@ -1,0 +1,43 @@
+<%--
+Created by IntelliJ IDEA.
+User: nazar
+Date: 15.06.2020
+Time: 15:17
+To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <title>Authorization</title>
+</head>
+<body>
+<form name="auth-form">
+    <ul>
+        <li>Username: <label for="username"></label><input id="username" type="text" name="username"></li>
+        <li>Password: <label for="password"></label><input id="password" type="password" name="password"></li>
+    </ul>
+    <button type="button" onclick="dodo(this)">Sign IN</button>
+</form>
+<script>
+    function dodo() {
+        $.ajax({
+            url: "/authentication",
+            type: "POST",
+            contentType: "application/json",
+            data:
+                JSON.stringify({
+                    "username": document.getElementById('username').value,
+                    "password": document.getElementById('password').value
+                })
+        }).done(resp => {
+            console.log(resp.jwtToken);
+            if (resp.jwtToken !== undefined) {
+                document.cookie = resp.jwtToken;
+                window.location.replace("/producers");
+            }
+        })
+    }
+</script>
+</body>
+</html>
