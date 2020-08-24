@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+    <title>Add-user</title>
+</head>
+<body>
+<div id="navbar" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+        <li><a th:href="@{/}">Index</a></li>
+        <li><a th:href="@{/producers}">Producers</a></li>
+        <li><a th:href="@{/products}">Products</a></li>
+    </ul>
+</div>
+<form action="#" th:action="@{/users}" th:object="${user}" method="post">
+    <p>First Name: <input type="text" th:field="*{firstName}"/></p>
+    <p>Last Name: <input type="text" th:field="*{lastName}"/></p>
+    <p>Username: <input type="text" th:field="*{username}"/></p>
+    <p>Password: <input type="text" th:field="*{password}"/></p>
+    <p>User role:
+        <select th:field="*{userRole}">
+            <th:block th:each="role : ${roles}">
+                <option th:value="${role}" th:utext="${role}"></option>
+            </th:block>
+        </select>
+    </p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>
