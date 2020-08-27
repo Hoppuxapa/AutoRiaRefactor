@@ -1,0 +1,24 @@
+<div class="topnav" id="myTopnav" xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" >
+    <a th:href="@{/index}">Home</a>
+    <div class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+        <button class="dropbtn">Admin
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a th:href="@{/users/show-users}">Show all users</a>
+            <a th:href="@{/users/show-queries}">Show all queries</a>
+        </div>
+    </div>
+    <a th:href="@{/sendEmail}" sec:authorize="hasRole('ROLE_ADMIN')">Send email</a>
+    <div class="dropdown" style="float: right;">
+        <button class="dropbtn">Settings
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a th:href="@{/login}">Log out</a>
+        </div>
+    </div>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+</div>
