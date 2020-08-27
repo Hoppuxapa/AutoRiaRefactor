@@ -1,90 +1,112 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: black;
+        }
 
-    <link rel="stylesheet" type="text/css"
-          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+        * {
+            box-sizing: border-box;
+        }
 
-    <title>Registration</title>
+        /* Add padding to containers */
+        .container {
+            padding: 16px;
+            background-color: white;
+        }
+
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+
+        input[type=text]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        /* Overwrite default styles of hr */
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        /* Set a style for the submit button */
+        .registerbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+        }
+
+        .registerbtn:hover {
+            opacity: 1;
+        }
+
+        /* Add a blue text color to links */
+        a {
+            color: dodgerblue;
+        }
+
+        /* Set a grey background color and center the text of the "sign in" section */
+        .signin {
+            background-color: #f1f1f1;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+
+<form th:action="@{/registration}" th:object="${user}" method="post">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                    aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span> <span
-                    class="icon-bar"></span> <span class="icon-bar"></span> <span
-                    class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#" th:href="@{/}">Registration and
-                Login Module</a>
-        </div>
+        <h1>Register</h1>
+        <p>Please fill in this form to create an account.</p>
+        <hr>
+
+        <label for="email"><b>Email</b></label>
+        <input id="email" type="text" placeholder="Enter Email" name="email" required>
+
+        <label for="password"><b>Password</b></label>
+        <input id="password" type="password" placeholder="Enter Password" name="password" required>
+
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+        <input id="psw-repeat" type="password" placeholder="Repeat Password" name="psw-repeat" required>
+
+        <label for="username"><b>Username</b></label>
+        <input id="username" type="text" placeholder="Enter Username" name="username" required>
+
+        <label for="age"><b>Age</b></label>
+        <input id="age" type="text" placeholder="Enter Age" name="age" required>
+
+        <label for="first_name"><b>First Name</b></label>
+        <input id="first_name" type="text" placeholder="Enter First Name" name="firstName" required>
+
+        <label for="last_name"><b>Last Name</b></label>
+        <input id="last_name" type="text" placeholder="Enter Last Name" name="lastName" required>
+
+        <hr>
+        <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+
+        <button type="submit" class="registration">Register</button>
     </div>
-</nav>
 
-<br>
-<br>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-
-            <div th:if="${param.success}">
-                <div class="alert alert-info">You've successfully registered
-                    to our awesome app!</div>
-            </div>
-
-            <h1>Registration</h1>
-            <form th:action="@{/registration}" th:object="${user}" method="post">
-
-                <p class="error-message" th:if="${#fields.hasGlobalErrors()}"
-                   th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
-                    error</p>
-
-                <div class="form-group"
-                     th:classappend="${#fields.hasErrors('firstName')}? 'has-error':''">
-                    <label for="firstName" class="control-label">First name</label> <input
-                        id="firstName" class="form-control" th:field="*{firstName}" />
-                    <p class="error-message"
-                       th:each="error: ${#fields.errors('firstName')}"
-                       th:text="${error}">Validation error</p>
-                </div>
-                <div class="form-group"
-                     th:classappend="${#fields.hasErrors('lastName')}? 'has-error':''">
-                    <label for="lastName" class="control-label">Last name</label> <input
-                        id="lastName" class="form-control" th:field="*{lastName}" />
-                    <p class="error-message"
-                       th:each="error : ${#fields.errors('lastName')}"
-                       th:text="${error}">Validation error</p>
-                </div>
-                <div class="form-group"
-                     th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
-                    <label for="password" class="control-label">Password</label> <input
-                        id="password" class="form-control" type="password"
-                        th:field="*{password}" />
-                    <p class="error-message"
-                       th:each="error : ${#fields.errors('password')}"
-                       th:text="${error}">Validation error</p>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Register</button>
-                    <span>Already registered? <a href="/" th:href="@{/login}">Login
-                                    here</a></span>
-                </div>
-
-            </form>
-        </div>
+    <div class="container signin">
+        <p>Already have an account? <a href="login.html">Sign in</a>.</p>
     </div>
-</div>
+</form>
 
-<script type="text/javascript"
-        th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
-<script type="text/javascript"
-        th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 </body>
 </html>
+
