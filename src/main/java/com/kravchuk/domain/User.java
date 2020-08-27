@@ -1,21 +1,25 @@
 package com.kravchuk.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
 
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "users")
+@Component
 @Data
 @TypeDef(
         name = "pgsql_enum",
         typeClass = PostgreSQLEnumType.class
 )
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -35,8 +39,15 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "age")
+    private int age;
+
+    @Column(name = "email")
+    private String email;
+
+
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_role")
     @Type(type = "pgsql_enum")
     private UserRole userRole;
 
