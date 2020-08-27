@@ -1,27 +1,27 @@
 package com.kravchuk.web;
 
 import com.kravchuk.domain.User;
-import com.kravchuk.domain.UserRole;
-import com.kravchuk.service.UserService;
+import com.kravchuk.repository.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("users")
 public class UserController {
 
+    UserService userService;
     @Autowired
-    private UserService userService;
-
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
     @ModelAttribute("user")
     public User user(){return new User();}
 
-    @GetMapping("/users")
+
+ /*   @GetMapping("/users")
     public String getAllUsers(Model model){
-        model.addAttribute("users", userService.findAllUsers());
+        model.addAttribute("users", userServiceImpl.findAllUsers());
         return "user";
     }
 
@@ -41,17 +41,8 @@ public class UserController {
     public ResponseEntity<Long> deleteUser(@PathVariable("id") Long id){
         userService.deleteUser(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
-    }
+    }*/
 
-    @PostMapping("/change_user_role_admin/{id}")
-    public ResponseEntity<Long> changeUserRoleToAdmin(@PathVariable("id") Long id){
-        userService.changeUserRoleToAdministrator(id);
-        return new ResponseEntity<>(id, HttpStatus.OK);
-    }
 
-    @PostMapping("/change_user_role_user/{id}")
-    public ResponseEntity<Long> changeUserRoleToUser(@PathVariable("id") Long id){
-        userService.changeUserRoleToUser(id);
-        return new ResponseEntity<>(id, HttpStatus.OK);
-    }
+
 }

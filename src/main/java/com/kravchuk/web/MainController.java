@@ -24,4 +24,10 @@ public class MainController {
     public String userIndex() {
         return "user/index";
     }
+
+    @GetMapping("registration")
+    public String registration(){
+        return "registration";
+    }
 }
+

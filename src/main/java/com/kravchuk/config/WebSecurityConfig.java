@@ -1,6 +1,7 @@
 package com.kravchuk.config;
 
-import com.kravchuk.service.UserService;
+
+import com.kravchuk.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +21,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserService userService;
+    private UsersDetailsService UsersDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
@@ -61,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        auth.setUserDetailsService(userService);
+        auth.setUserDetailsService(UsersDetailsService);
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }

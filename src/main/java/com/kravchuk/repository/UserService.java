@@ -1,9 +1,14 @@
 package com.kravchuk.repository;
 
 import com.kravchuk.domain.User;
+import com.kravchuk.service.dto.UserRegistrationDTO;
+
+import java.util.List;
 
 public interface UserService {
-    void save(User user);
+    List<User> getAllUsers();
 
-    User findByUsername(String username);
+    User findByEmail(String email);
+
+    User register(UserRegistrationDTO registration);
 }
