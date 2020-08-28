@@ -145,18 +145,13 @@
 <div id="id01" class="modal">
 
     <form th:action="@{/login}" method="post">
-        <div class="imgcontainer">
-            <span onclick="document.getElementById('id01').style.display='none'" class="close"
-                  title="Close Modal">×</span>
-            <img src="img_avatar2.png" alt="Avatar" class="avatar">
-        </div>
 
         <div class="container">
             <label for="uname"><b>Username</b></label>
-            <input id="uname" type="text" placeholder="Enter Username" name="uname" required>
+            <input id="uname" type="text" placeholder="Enter Username" name="username" required>
 
             <label for="psw"><b>Password</b></label>
-            <input id="psw" type="password" placeholder="Enter Password" name="psw" required>
+            <input id="psw" type="password" placeholder="Enter Password" name="password" required>
 
             <button type="submit">Login</button>
             <label>
@@ -171,6 +166,9 @@
             <span class="psw">Forgot <a href="#">password?</a></span>
         </div>
     </form>
+</div>
+<div class="container registration">
+    <p>Do not have an account? <a href="/registration">Register</a>.</p>
 </div>
 
 <script>
