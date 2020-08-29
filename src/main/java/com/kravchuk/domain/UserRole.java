@@ -1,11 +1,13 @@
 package com.kravchuk.domain;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import java.util.Arrays;
 import java.util.Optional;
 
-public enum UserRole {
-    ROLE_ADMIN("ROLE_ADMIN"),
-    ROLE_USER("ROLE_USER");
+public enum UserRole implements GrantedAuthority {
+    ROLE_ADMIN("ADMINISTRATOR"),
+    ROLE_USER("USER");
 
     private String role;
 
@@ -21,5 +23,10 @@ public enum UserRole {
         return Arrays.stream(UserRole.values())
                 .filter(enumValue -> enumValue.getRole().equals(status))
                 .findAny();
+    }
+
+    @Override
+    public String getAuthority() {
+        return name();
     }
 }
