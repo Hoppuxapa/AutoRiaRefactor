@@ -1,5 +1,6 @@
-package com.kravchuk.config;
+package com.kravchuk.service;
 
+import com.kravchuk.config.UserPrincipal;
 import com.kravchuk.domain.User;
 import com.kravchuk.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

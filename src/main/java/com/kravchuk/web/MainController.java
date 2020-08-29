@@ -20,14 +20,24 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping("/menu")
+    public String menu(Model model) {
+        model.addAttribute("Hello!");
+        return "menu";
+    }
     @GetMapping("/user")
     public String userIndex() {
-        return "user/index";
+        return "user";
     }
 
     @GetMapping("registration")
-    public String registration(){
+    public String registration() {
         return "registration";
+    }
+
+    @GetMapping("user/userEdit")
+    public String userEdit() {
+        return "user/userEdit";
     }
 }
 

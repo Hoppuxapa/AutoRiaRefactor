@@ -14,6 +14,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
+    
+
     @Modifying
     @Transactional
     @Query(value = "update users\n" +

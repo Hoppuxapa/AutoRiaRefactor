@@ -1,7 +1,6 @@
 package com.kravchuk.config;
 
 
-import com.kravchuk.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,13 +20,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UsersDetailsService UsersDetailsService;
+    private com.kravchuk.service.UsersDetailsService UsersDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
             throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("bida@gmail.com").password(passwordEncoder().encode("1234567890")).roles("ADMINISTRATOR");
+                .withUser("u").password(passwordEncoder().encode("1")).roles("ADMINISTRATOR");
     }
 
     @Override
@@ -39,18 +38,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/js/**",
                         "/css/**",
                         "/img/**",
+                        "WEB-INF",
+                        "templates",
                         "/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .successForwardUrl("/menu")
                 .permitAll()
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/login")
                 .permitAll();
     }
 
