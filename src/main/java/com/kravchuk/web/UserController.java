@@ -29,7 +29,7 @@ public class UserController {
         return "userEdit";
     }
 
-    @GetMapping("/userList")
+    @RequestMapping("/userList")
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "userList";

@@ -4,28 +4,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Map;
 
 @Controller
 public class MainController {
 
-    @GetMapping("/")
+    @RequestMapping("/")
     public String root(@RequestHeader Map<String, String> headers) {
         return "index";
     }
 
-    @GetMapping("/login")
+    @RequestMapping("/login")
     public String login(Model model) {
         return "login";
     }
 
-    @GetMapping("/menu")
+    @RequestMapping("/menu")
     public String menu(Model model) {
         model.addAttribute("Hello!");
         return "menu";
     }
-    @GetMapping("/user")
+    @RequestMapping("/user")
     public String userIndex() {
         return "user";
     }
@@ -35,7 +36,7 @@ public class MainController {
         return "registration";
     }
 
-    @GetMapping("user/userEdit")
+    @RequestMapping("user/userEdit")
     public String userEdit() {
         return "user/userEdit";
     }
