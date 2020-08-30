@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
+    public User findByEmail(String username) {
+        return userRepository.findByUsername(username).orElse(null);
     }
 
     public User register(UserRegistrationDTO registration) {
